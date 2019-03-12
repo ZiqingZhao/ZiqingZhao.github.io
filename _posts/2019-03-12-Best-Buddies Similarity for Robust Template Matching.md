@@ -1,3 +1,11 @@
+---
+layout: post
+title: Best-Buddies Similarity for Robust Template Matching
+author: Ziqing Zhao
+subtitle: 基于Best-Buddies Similarity 的鲁棒模板识别
+category: Computer Vision
+---
+
 # Best-Buddies Similarity for Robust Template Matching 基于Best-Buddies Similarity 的鲁棒模板识别
 
 Dekel, Tali & Oron, Shaul & Rubinstein, Michael & Avidan, Shai & T. Freeman, William. (2015). Best-Buddies Similarity for robust template matching. 2021-2029. 10.1109/CVPR.2015.7298813. 
