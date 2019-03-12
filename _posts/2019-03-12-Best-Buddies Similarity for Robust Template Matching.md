@@ -7,13 +7,11 @@ tags: [Computer Vision, Template Matching]
 comments: true
 ---
 
-
-
-# Best-Buddies Similarity for Robust Template Matching 基于Best-Buddies Similarity 的鲁棒模板识别
+## 基于Best-Buddies Similarity 的鲁棒模板识别
 
 Dekel, Tali & Oron, Shaul & Rubinstein, Michael & Avidan, Shai & T. Freeman, William. (2015). Best-Buddies Similarity for robust template matching. 2021-2029. 10.1109/CVPR.2015.7298813. 
 
-## Template matching 模板识别
+### Template matching 模板识别
 
 > **Template matching** is a technique in digital image processing for finding small parts of an image which match a template image. It can be used in manufacturing as a part of quality control, a way to navigate a mobile robot, or as a way to detect edges in images.
 
@@ -25,11 +23,11 @@ Dekel, Tali & Oron, Shaul & Rubinstein, Michael & Avidan, Shai & T. Freeman, Wil
 
 很多模板识别方法在模板和目标图像之间建立了特定的参数化变形模型（比如刚性变形、仿射变换等），这限制了可以处理的场景类型，并且在考虑复杂模型时可能需要大量参数
 
-## Abstract 摘要
+### Abstract 摘要
 
 这篇论文主要介绍了在无约束环境下模板匹配的一种新方法，本质是Best-Buddies Similarity（BBS算法）。这是一种在两个点集之间的无参鲁棒相似性测量，基于计算Best-Buddies Pairs（BBPs，原集和目标集中的点对，每个点都是另一个点的最近邻）的数量。BBS有几个关键特性，可以使其抵抗复杂的几何变形和高度异常的点（背景噪声和遮挡）。作者提供了一种统计分析来证明BBS的合理性，并且将BBS应用于复杂的真实数据集。
 
-## Introduction 简介
+### Introduction 简介
 
 作者使用了一种新的方法Best-Buddies Similarity来克服模板匹配的局限性，并将其成功应用于template matching in the wild。
 
@@ -45,7 +43,7 @@ BBS测量$\mathbb{R}^d$两点集之间的相似性，只依赖于点对中非常
 - 理论分析其主要特征
 - 对真实数据进行广泛评估，并与其他常见模板匹配方法进行比较
 
-## Related Work 相关研究
+### Related Work 相关研究
 
 模板匹配与相似性度量息息相关。
 
