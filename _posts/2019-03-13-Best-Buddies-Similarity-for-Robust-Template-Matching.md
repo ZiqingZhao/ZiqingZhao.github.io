@@ -96,3 +96,39 @@ BBS的主要特性为
 
 考虑简单的两个2D点集$$P$$和$$Q$$，集合$$P$$由两个不同的正态分布$$N(\mu_1,\sum_1)$$和$$N(\mu_2,\sum_2)$$所绘制的2d点组成。集合$$P$$中的点是从相同的分布$$N(\mu_1,\sum_1)$$和不同的分布$$N(\mu_3,\sum_3)$$所绘制的。$$N(\mu_1,\sum_1)$$被视为foreground模型，$$N(\mu_2,\sum_2)$$和$$N(\mu_3,\sum_3)$$是两个不同的background模型。
 
+这里我使用了BBP公式对文章中figure 2给出的二维高斯分布结果进行了验证，代码如下
+
+```matlab
+mu1 = [2 3];
+SIGMA1 = [1 0; 0 2];
+r1 = mvnrnd(mu1,SIGMA1,200);
+mu2 = [7 8];
+SIGMA2 = [1 0; 0 2];
+r2 = mvnrnd(mu2,SIGMA2,200);
+mu3 = [2 3];
+SIGMA3 = [2 0; 0 4];
+r3 = mvnrnd(mu3,SIGMA3,200);
+subplot(2,2,1);
+plot(r1(:,1),r1(:,2),'o',r2(:,1),r2(:,2),'o');
+subplot(2,2,2);
+plot(r1(:,1),r1(:,2),'o',r3(:,1),r3(:,2),'o');
+subplot(2,2,3);
+p=[r1;r2];
+q=[r1;r3];
+idx=knnsearch(p,q);
+plot(p(idx,1),p(idx,2),'x');
+subplot(2,2,4);
+plot(q(idx,1),q(idx,2),'x');
+```
+
+得到的结果如下
+
+![BBPs between 2D-Gaussian signals](https://raw.githubusercontent.com/ZiqingZhao/ZiqingZhao.github.io/master/img/BBPs-butween-2D-Gaussian-signals.png)
+
+与文中所给出的结论基本一致。
+
+上述示例表明了BBS对数据中高级别异常值的鲁棒性。BBS捕获foreground，不强制background匹配，这样就不需要对background和foreground进行参数化建模，或者对它们的分布有一个先验了解。此外，如果$$p$$和$$q$$是从同一分布中抽取的，则$$\{p,q\}$$是BBP的可能性更大。
+
+#### 5.3 BBS for Template Matching 基于BBS的模板识别
+
+要想将BBS应用于模板匹配，需要将每个image patch转换为$$\mathbb{R}^d$$中的一个点集，这需要将一个image window在spatial-appearance空间中表示。为此，首先把图像region分成若干个$$k\times k$$的patches。每个$$k\times k$$patch由其$$RGB$$值组成的$$k^2$$个矢量和中心像素相对于坐标系的$$xy$$坐标表示。
