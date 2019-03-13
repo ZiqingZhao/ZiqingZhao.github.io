@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Best-Buddies Similarity for Robust Template Matching"
-date: 2019-03-12
+date: 2019-03-13
 excerpt: "基于Best-Buddies Similarity的鲁棒模板识别"
 tags: [Computer Vision, Template Matching]
 comments: true
@@ -31,7 +31,7 @@ comments: true
 
 作者使用了一种新的方法Best-Buddies Similarity来克服模板匹配的局限性，并将其成功应用于template matching in the wild。
 
-BBS测量$$\mathbb{R}^d$$两点集之间的相似性，只依赖于点对中非常小的子集：the Best-Buddies Pairs（BBPs）。如果一对点中，一个点是对应集中另一个点的最近邻，则该对点被视为BBP。BBS是BBP集合所有点的fraction。
+BBS测量$$\mathbb{R}^d$$两点集之间的相似性，只依赖于点对中非常小的子集：the Best-Buddies Pairs（BBPs）。如果一对点中，一个点是对应集中另一个点的最近邻，则该对点被视为BBP。BBS是BBP集合所有点的函数。
 
 这种方法有着重要且非同寻常的特性。BBS由于只考虑BBP，因此对于大部分异常点具有鲁棒性。BBS随两点集的distribution增大而减小，两个distribution相同时取得最大值。也就是说，如果两个点是BBP，它们很可能是从相同的分布中提取的。文章中给出了这种观测的统计公式并且在一维情况下对从不同的高斯分布中提取的点击进行了数值分析。BBS可以在存在异常值的情况下可靠地匹配来自同一分布的特征，在视角变换和集合变形下依然可以进行稳健的模板匹配。
 
@@ -58,3 +58,41 @@ BBS测量$$\mathbb{R}^d$$两点集之间的相似性，只依赖于点对中非�
 Olson根据最大似然估计公式进行模板匹配模板匹配。Oron等人使用$$xyRGB$$空间和简化的模板匹配来测量两个点集之间的EMD。虽然BBS在同一个$$xyRGB$$ 空间中工作，但它不同于EMD，EMD要求1:1匹配，并且不区分内点和外点。
 
 BDS（Bidirectional similarity）被用作两个由图像块的集合表示的图像之间的相似性度量。在一个图像中，BDS求和每个补丁到另一个图像中最近的邻居之间的距离，反之亦然。相比之下，BBS是基于BBP的计数，并且只隐式使用它们的实际距离。此外，BDS不区分输入端和输出端。这些规范使BBS成为一种更为可靠和可靠的测量方法，这一点在后续实验中得到了证明。
+
+另一个广泛使用的图像匹配测量方法是Hausdorff距离。为了处理遮挡或退化，Huttenlocher等人提出了一个fractional Hausdorff距离，取第K远的点而不是最远点，这个度量高度依赖于需要调整的K。Dubuisson和Jain将max替换为sum。Pomeranz等人在解决拼图问题时使用了Best Buddies。具体来说，他们使用与我们相似的度量来确定if a pair of pieces are compatible with each other。
+
+### 05 Method 方法
+
+该方法旨在存在高水平的异常值（即背景噪声、遮挡）和目标的非刚性变形的情况下，将模板与给定图像匹配。用传统的滑动窗口方法，在模板和图像中每个可能的窗口（模板大小）之间同样计算出BBS。
+
+#### 5.1 定义
+
+下面给出BBS的一般定义。
+
+BBS测量了两个点集$$P=\{p_i\}^N_{i=1}$$和$$Q=\{q_i\}^M_{i=1}$$之间的相似性，这里$$p_i,q_i\in\mathbb{R}^d$$。当一对点$$\{p_i\in P,q_j\in Q\}$$中的$$p_i$$是$$q_j$$的最近邻或$$q_j$$是$$p_i$$的最近邻时，它们是一组BBP。
+$$
+bb(p_i,q_j,P,Q)=
+\left\{
+\begin{array}{rcl}
+   & 1 & NN(p_i,Q)=q_j\wedge NN(q_j,P)=p_i\\
+   & 0 & otherwise
+\end{array}
+\right.
+$$
+这里，$$NN(p_i,Q)=\mathop{argmin}\limits_{q \in Q} d(p_i,q)$$，$$d(p_i,q)$$是$$p_i$$和$$Q$$内各点之间距离。
+
+集合$$P$$和集合$$Q$$之间的BBS定义如下：
+$$
+BBS(P,Q)=\frac{1}{min\{M,N\}}\cdot \sum\limits^{N}_{i=1}\sum\limits^{M}_{j=1}bb(p_i,q_j,P,Q)
+$$
+
+#### 5.2 主要特性
+
+BBS的主要特性为
+
+- 只依赖于匹配点（BBPs）的子集（通常很小），其余的被视为outliers
+- BBS可以找出数据中的双向inliers而不需要任何先验知识或者潜在变形
+- BBP通过计算BBP的数量进行排名，而不是使用实际的距离值
+
+考虑简单的两个2D点集$$P$$和$$Q$$，集合$$P$$由两个不同的正态分布$$N(\mu_1,\sum_1)$$和$$N(\mu_2,\sum_2)$$所绘制的2d点组成。集合$$P$$中的点是从相同的分布$$N(\mu_1,\sum_1)$$和不同的分布$$N(\mu_3,\sum_3)$$所绘制的。$$N(\mu_1,\sum_1)$$被视为foreground模型，$$N(\mu_2,\sum_2)$$和$$N(\mu_3,\sum_3)$$是两个不同的background模型。
+
