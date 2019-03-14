@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Best-Buddies Similarity for Robust Template Matching"
-date: 2019-03-13
+date: 2019-03-14
 excerpt: "基于Best-Buddies Similarity的鲁棒模板识别"
 tags: [Computer Vision, Template Matching]
 comments: true
