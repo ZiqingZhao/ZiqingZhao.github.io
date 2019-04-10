@@ -123,7 +123,7 @@ plot(q(idx,1),q(idx,2),'x');
 
 得到的结果如下
 
-![BBPs between 2D-Gaussian signals](https://raw.githubusercontent.com/ZiqingZhao/ZiqingZhao.github.io/master/img/BBPs-butween-2D-Gaussian-signals.png)
+![BBPs between 2D-Gaussian signals](<https://raw.githubusercontent.com/ZiqingZhao/ZiqingZhao.github.io/master/img/BBPs-between-2D-Gaussian-signals.png>)
 
 与文中所给出的结论基本一致。
 
