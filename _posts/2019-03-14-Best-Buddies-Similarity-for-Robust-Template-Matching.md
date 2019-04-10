@@ -70,6 +70,8 @@ BDS（Bidirectional similarity）被用作两个由图像块的集合表示的�
 下面给出BBS的一般定义。
 
 BBS测量了两个点集$$P=\{p_i\}^N_{i=1}$$和$$Q=\{q_i\}^M_{i=1}$$之间的相似性，这里$$p_i,q_i\in\mathbb{R}^d$$。当一对点$$\{p_i\in P,q_j\in Q\}$$中的$$p_i$$是$$q_j$$的最近邻或$$q_j$$是$$p_i$$的最近邻时，它们是一组BBP。
+
+
 $$
 bb(p_i,q_j,P,Q)=
 \left\{
@@ -79,12 +81,18 @@ bb(p_i,q_j,P,Q)=
 \end{array}
 \right.
 $$
+
+
 这里，$$NN(p_i,Q)=\mathop{argmin}\limits_{q \in Q} d(p_i,q)$$，$$d(p_i,q)$$是$$p_i$$和$$Q$$内各点之间距离。
 
 集合$$P$$和集合$$Q$$之间的BBS定义如下：
+
+
 $$
 BBS(P,Q)=\frac{1}{min\{M,N\}}\cdot \sum\limits^{N}_{i=1}\sum\limits^{M}_{j=1}bb(p_i,q_j,P,Q)
 $$
+
+
 
 ##### Key Properties 主要特性
 
@@ -140,17 +148,29 @@ plot(q(idx,1),q(idx,2),'x');
 ##### 5.1.1 One-dimentional Case 一维情况分析
 
 根据之前给出的定义，$$BBS(P,Q)$$的期望为
+
+
 $$
 E[BBS(P,Q)]=\frac{1}{min\{M,N\}}\cdot \sum\limits^{N}_{i=1}\sum\limits^{M}_{j=1}E[bb(p_i,q_j,P,Q)]
 $$
+
+
 将$$bb(p_i,q_j,P,Q)$$的期望记作$$E_{BBP}$$，则
+
+
 $$
 E_{BBP}=\iint\limits_{P,Q}bb_{i,j}(P,Q)P_r\{P\}P_r\{Q\}dPdQ
 $$
+
+
 假设每个点独立于其它点，积分式可以进行如下简化
+
+
 $$
 E_{BBP}=\iint\limits_{-\infty}^{\infty}(F_Q(p^-)+1-F_Q(p^+))^{M-1}\cdot (F_P(q^-)+1-F_P(q^+))^{N-1}f_P(p)f_Q(q)dpdq
 $$
+
+
 这里，$$F_P(x)=Pr\{p\le x\}$$，$$F_Q(x)=Pr\{q\le x\}$$，$$p^-=p-d(p,q)$$，$$p^+=p+d(p,q)$$，$$q^-=q-d(p,q)$$，$$q^+=q+d(p,q)$$。
 
 <!--BBS证明过程看不懂-->
@@ -158,9 +178,13 @@ $$
 ##### 5.1.2 多维情况分析
 
 如果d维空间不相关（高斯分布情况下其协方差矩阵是对角矩阵），则一对点是BBP的必要不充分条件是，该对点在各维条件下都是BBP。结合前面所给出的一维空间下的结论，分别在每个维度进行分析。因此在多维情况下，BBS的期望被每个维度的期望值的乘积所限定，即
+
+
 $$
 E_{BBS}\ge \prod\limits_{i=1}^d E^i_{BBS}
 $$
+
+
 这里$$E^i_{BBS}$$表示第$$i$$维空间内的BBS。
 
 BBS随着d的增加下降更快。如果一对点在某个维度不是BBP，则不一定意味着在多维不是BBP。
@@ -170,9 +194,13 @@ BBS随着d的增加下降更快。如果一对点在某个维度不是BBP，则�
 计算两个点集$$P,Q\in\mathbb{R}^d$$之间的BBS值，需要计算每对点之间的距离。也就是说，首先需要构建一个距离矩阵$$D$$，满足$$[D]_{i,j}=d(p_i,q_j)$$。在给定距离矩阵$$D$$的条件下，$$NN(p_i,Q)$$（$$p_i$$点的最近邻）也就是$$D$$矩阵中第$$i$$行的最小值。同样地，$$NN(q_j,P)$$就是$$D$$矩阵中第$$j$$列的最小值。BBS通过计算互为最近邻点的数量得到（除以常量）。
 
 实验中所用到的距离函数如下
+
+
 $$
 d(p_i,q_j)=||p_i^{(A)}-q_j^{(A)}||^2_2+\lambda ||p_i^{(L)}-q_j^{(L)}||^2_2
 $$
+
+
 这里上标$$A$$表示像素的$$RGB$$值，上标$$L$$表示像素的位置（坐标进行了归一化）。$$\lambda$$根据经验选取2，在所有实验中固定。
 
 首先将图像和模板拆分成若干个$$k\times k$$的图像块，为了清晰起见，这里先将分析拆分成单个像素的BBS的复杂度，然后再扩展到$$k\times k$$。
