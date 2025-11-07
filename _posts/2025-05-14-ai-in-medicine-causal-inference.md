@@ -21,8 +21,8 @@ comments: true
 
 ## 2. Causality
 
-- **Practical Definition**: $T$ causes $Y$ if intervening on $T$ changes $Y$, holding other factors constant  
-- **Do-Operator**: $P(Y \mid \text{do}(T))$ denotes the distribution of $Y$ under an intervention on $T$ 
+- **Practical Definition**: $$T$$ causes $$Y$$ if intervening on $$T$$ changes $$Y$$, holding other factors constant  
+- **Do-Operator**: $$P(Y \mid \text{do}(T))$$ denotes the distribution of $$Y$$ under an intervention on $$T$$ 
 - **Causal Graphs (DAGs)**: nodes = variables; edges = direct causal effects  
   - Example: Aspirin → Stroke, with confounders (e.g. coronary heart disease) 
 
@@ -50,9 +50,9 @@ comments: true
 
 ## 5. Potential Outcomes
 
-- **Individual Potential Outcomes**: $Y_i(A)$, $Y_i(B)$ under treatments $A,B$  
-- **Individual Treatment Effect (ITE)**: $Y_i(A) - Y_i(B)$  
-- **Average Treatment Effect (ATE)**: $\mathbb{E}[Y_i(A) - Y_i(B)]$  
+- **Individual Potential Outcomes**: $$Y_i(A)$$, $$Y_i(B)$$ under treatments $$A,B$$  
+- **Individual Treatment Effect (ITE)**: $$Y_i(A) - Y_i(B)$$  
+- **Average Treatment Effect (ATE)**: $$\mathbb{E}[Y_i(A) - Y_i(B)]$$  
 - **Fundamental Problem**: only one potential outcome is observed per unit; counterfactual must be estimated 
 $$
 \mathbb{E}[Y_i(A)-Y_i(B)] \ne \mathbb{E}[Y_i \mid T=A]- \mathbb{E}[Y_i \mid T=B]
@@ -62,15 +62,15 @@ $$
 ## 6. Counterfactual Inference Approaches
 
 1. **Covariate Adjustment**  
-   - Regression (model $Y\sim T + X$; sensitive to model misspecification, multicollinearity)  
-   - Matching (pair treated/untreated on $X$)  
-	   - $\text{match}(i)=\min_j \text{Distance}(X_i, X_j)$
+   - Regression (model $$Y\sim T + X$$; sensitive to model misspecification, multicollinearity)  
+   - Matching (pair treated/untreated on $$X$$)  
+	   - $$\text{match}(i)=\min_j \text{Distance}(X_i, X_j)$$
 	   - only works well when matched pairs are very similar
-   - Stratification (group by $X$-levels)
-1. **Propensity Score** $e(X)=P(T=1\mid X)$  
+   - Stratification (group by $$X$$-levels)
+1. **Propensity Score** $$e(X)=P(T=1\mid X)$$  
    - Estimated via logistic regression  
    - Use for matching, stratification, or **Inverse Probability of Treatment Weighting (IPTW)**  
-   - Balances covariates across treatment groups; high‐variance if $e(X)$ near 0 or 1 
+   - Balances covariates across treatment groups; high‐variance if $$e(X)$$ near 0 or 1 
    - Always one dimensional even if X is high-dimensional
    - If conditioning on X suffices to control for all confounding, so does conditioning on estimated PS
 

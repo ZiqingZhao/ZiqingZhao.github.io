@@ -8,7 +8,7 @@ comments: true
 ---
 
 ## Overview
-Generative models are unsupervised deep-learning methods that learn the data distribution $p_{\text{data}}$ to create new examples similar to the original dataset. They are useful for **data augmentation** (synthetic training samples) and **representation learning** (discovering patterns for anomaly detection etc.).
+Generative models are unsupervised deep-learning methods that learn the data distribution $$p_{\text{data}}$$ to create new examples similar to the original dataset. They are useful for **data augmentation** (synthetic training samples) and **representation learning** (discovering patterns for anomaly detection etc.).
 
 Key families:
 - **GANs**: sharp samples, adversarial loss  
@@ -18,20 +18,20 @@ Key families:
 
 ## 1. Generative Modelling Recap
 
-- **Data distribution** $p_{\text{data}}$ (unknown)  
-- **Model distribution** $p_\theta$ – parameterized to approximate $p_{\text{data}}$  
+- **Data distribution** $$p_{\text{data}}$$ (unknown)  
+- **Model distribution** $$p_\theta$$ – parameterized to approximate $$p_{\text{data}}$$  
 - **Training objectives**:  
   - Likelihood maximization (Flows, VAEs via ELBO)  
   - Adversarial loss (GANs)  
 - **Operations**:  
   - **Sampling**: draw novel data points  
-  - **Density evaluation**: compute $p_\theta(x)$ (Flows only)  
+  - **Density evaluation**: compute $$p_\theta(x)$$ (Flows only)  
 
 
 ## 2. Deep Generative Models
 
 ### 2.1 Definition & Use Cases
-- **Definition**: Unsupervised methods that learn $p_{\text{data}}$  
+- **Definition**: Unsupervised methods that learn $$p_{\text{data}}$$  
 - **Sampling**: generate new examples  
 - **Representation learning**: discover latent structure  
 - **Use cases**:  
@@ -52,14 +52,14 @@ Key families:
 ## 3. Generative Adversarial Networks (GANs)
 
 - **Framework**: Minimax game between  
-  - Generator $G$: $G(z)$ from noise $z\sim p_z$  
-  - Discriminator $D$: $D(x)$ real vs fake  
+  - Generator $$G$$: $$G(z)$$ from noise $$z\sim p_z$$  
+  - Discriminator $$D$$: $$D(x)$$ real vs fake  
 - **Loss**:  
   $$
     \min_G \max_D \; \mathbb{E}[\log D(x)] + \mathbb{E}[\log(1 - D(G(z)))]
   $$
 - **Challenges**:  
-  - **Instability**: vanishing gradients (if $D$ too strong)  
+  - **Instability**: vanishing gradients (if $$D$$ too strong)  
   - **Mode collapse**: low diversity  
     - **Detection**: Fréchet Inception Distance (FID)  
     - **Mitigation**: cGANs, auxiliary info  
@@ -78,7 +78,7 @@ Key families:
 - Add noise to input to improve robustness  
 
 ### 4.3 Variational Autoencoder (VAE)
-- **Latent**: $q(z|x)$  
+- **Latent**: $$q(z|x)$$  
 - **Objective**: maximize ELBO  
   $$
     \mathbb{E}_{q(z|x)}[\log p(x|z)] - \mathrm{KL}[q(z|x)\,\|\,p(z)]
@@ -90,17 +90,17 @@ Key families:
 ## 5. Flow-based Generative Models
 
 ### 5.1 Normalizing Flows (NF)
-- Invertible transforms $g$ mapping $z\sim p_z$ → data $y$  
+- Invertible transforms $$g$$ mapping $$z\sim p_z$$ → data $$y$$  
 - **Change of variables**:  
   $$
     \log p(y) = \log p_z(f(y)) + \sum \log\bigl|\det J_f(y)\bigr|
   $$
 - **Ops**:  
-  - Sampling: $z \to y = g(z)$  
-  - Scoring: $y \to z = f(y)$ → compute likelihood  
+  - Sampling: $$z \to y = g(z)$$  
+  - Scoring: $$y \to z = f(y)$$ → compute likelihood  
 
 ### 5.2 Continuous Normalizing Flows (CNF)
-- Model dynamics via ODE: $\frac{dz}{dt} = f(z,t)$  
+- Model dynamics via ODE: $$\frac{dz}{dt} = f(z,t)$$  
 - Use neural-ODE solvers for tractable Jacobians  
 
 ### 5.3 Flow Matching
@@ -109,11 +109,11 @@ Key families:
 
  **Medical Segmentation**:  
 - Represents segmentation masks as **Signed Distance Functions (SDF)**  
-- Learns an **implicit distribution** over SDF masks conditioned on image $x$
+- Learns an **implicit distribution** over SDF masks conditioned on image $$x$$
 
 From Binary Mask to Truncated SDF
-1. **Input**: image $x$  
-2. **Binary mask** $\;m\in\{0,1\}^{H\times W}$  
+1. **Input**: image $$x$$  
+2. **Binary mask** $$\;m\in\{0,1\}^{H\times W}$$  
 3. **Signed distance**:
 $$
      \mathrm{SDF}(p) = 
@@ -122,23 +122,23 @@ $$
        -\min_{q\in\partial S}\|p-q\|, & p\notin\Omega
      \end{cases}
 $$
-4. **Truncate & normalize** → $\tilde m_1\sim q(\tilde m\mid x)$  
-5. **Result**: dense SDF map encoding shape boundary $\partial S$
+4. **Truncate & normalize** → $$\tilde m_1\sim q(\tilde m\mid x)$$  
+5. **Result**: dense SDF map encoding shape boundary $$\partial S$$
 
 Corruption / Generative Process on SDF Masks
-- Define a continuous interpolation $\Psi_t(\tilde m_1\mid x)$ for $t\in[0,1]$:
-  - $\tilde m_0\sim p_0$ (noise prior)
-  - $\Psi_t(\tilde m_1\mid x) = t\,\tilde m_1 + (1-t)\,\tilde m_0$
+- Define a continuous interpolation $$\Psi_t(\tilde m_1\mid x)$$ for $$t\in[0,1]$$:
+  - $$\tilde m_0\sim p_0$$ (noise prior)
+  - $$\Psi_t(\tilde m_1\mid x) = t\,\tilde m_1 + (1-t)\,\tilde m_0$$
 - Equivalent ODE form:
   $$
     \frac{d}{dt}\,\Psi_t(\tilde m_1\mid x)
     = v_{\theta,t}\bigl(\Psi_t(\tilde m_1\mid x),\,x\bigr)
   $$
-- Observe intermediate SDF maps $\tilde m_t$ and binary masks $m_t = \mathbb{1}_{\{\tilde m_t\le0\}}$
+- Observe intermediate SDF maps $$\tilde m_t$$ and binary masks $$m_t = \mathbb{1}_{\{\tilde m_t\le0\}}$$
 
 Data & Learning Objective
-- **Dataset**: $\mathcal{D}=\{(\tilde m_{1}^{(s)},x^{(s)})\}_{s=1}^S$, where $\tilde m_{1}\sim q(\tilde m\mid x)$  
-- **Goal**: learn conditional vector field $v_{\theta,t}(\tilde m_t,x)$  
+- **Dataset**: $$\mathcal{D}=\{(\tilde m_{1}^{(s)},x^{(s)})\}_{s=1}^S$$, where $$\tilde m_{1}\sim q(\tilde m\mid x)$$  
+- **Goal**: learn conditional vector field $$v_{\theta,t}(\tilde m_t,x)$$  
 - **Loss** (Conditional Flow Matching):
   $$
     \mathcal{L}_{\mathrm{CFM}}(\theta)
@@ -148,27 +148,27 @@ Data & Learning Objective
       \Bigl[\tfrac12\,\big\|v_{\theta,t}(\tilde m_t,x)
       -\,u_t(\tilde m_t\mid \tilde m_1,x)\big\|^2\Bigr]
   $$
-  where $u_t(\tilde m_t\mid\tilde m_1,x)=\frac{d}{dt}\Psi_t(\tilde m_1\mid x)$.
+  where $$u_t(\tilde m_t\mid\tilde m_1,x)=\frac{d}{dt}\Psi_t(\tilde m_1\mid x)$$.
 
 
 ## 6. Denoising Diffusion Probabilistic Models
 
 ### 6.1 Forward & Reverse Processes
-- **Forward** $q(x_t|x_{t-1}) = \mathcal{N}(\sqrt{1-\beta_t}\,x_{t-1},\,\beta_t I)$, $t=1\ldots T$, $x_T\!\approx\!\mathcal{N}(0,I)$  
-- **Reverse** $p_\theta(x_{t-1}|x_t)=\mathcal{N}(\mu_\theta(x_t,t),\sigma_t^2I)$  
+- **Forward** $$q(x_t|x_{t-1}) = \mathcal{N}(\sqrt{1-\beta_t}\,x_{t-1},\,\beta_t I)$$, $$t=1\ldots T$$, $$x_T\!\approx\!\mathcal{N}(0,I)$$  
+- **Reverse** $$p_\theta(x_{t-1}|x_t)=\mathcal{N}(\mu_\theta(x_t,t),\sigma_t^2I)$$  
 
 ### 6.2 Training
-- Predict noise $\epsilon_\theta(x_t,t)$ via MSE loss  
+- Predict noise $$\epsilon_\theta(x_t,t)$$ via MSE loss  
 - U-Net backbone  
 
 ### 6.3 Sampling & Quality
-- Iterative denoising $x_T\to x_0$  
+- Iterative denoising $$x_T\to x_0$$  
   - **Pros**: high fidelity, stable  
   - **Cons**: slow (∼T evals)  
 
 ### 6.4 Score-Based View & SDEs
-- **Score function**: $\nabla_x\log p(x)$  
-- **Score matching**: learn $\hat s_\theta(x)\approx\nabla_x\log p_{\text{data}}(x)$  
+- **Score function**: $$\nabla_x\log p(x)$$  
+- **Score matching**: learn $$\hat s_\theta(x)\approx\nabla_x\log p_{\text{data}}(x)$$  
 - Simulate reverse SDE with learned score  
 
 ### 6.5 Accelerating Sampling
@@ -177,7 +177,7 @@ Data & Learning Objective
 - **Schedulers**: step-size / solver choice  
 
 ### 6.6 Conditioning Strategies
-- **Classifier guidance**: $\nabla_x\log C(i|x)$  
+- **Classifier guidance**: $$\nabla_x\log C(i|x)$$  
 - **Classifier-free guidance**: train with/without cond., interpolate  
 - **Spatial & Adaptive Group Norm**: inject class/time embeddings  
 - **Image-to-image**: DDIM inversion, interpolation, inpainting  

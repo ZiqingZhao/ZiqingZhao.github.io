@@ -26,7 +26,7 @@ The end-to-end model includes the information source, source encoder, channel en
 
 #### Performance Metrics
 
-- **Effectiveness:** quantified by spectral efficiency $\eta = R_b / B$, where $R_b=R_B \log_2 M = \frac{1}{T_s}\log_2 M$.
+- **Effectiveness:** quantified by spectral efficiency $$\eta = R_b / B$$, where $$R_b=R_B \log_2 M = \frac{1}{T_s}\log_2 M$$.
 - **Reliability:** measured by error probability, including symbol error rate
 
   $$
@@ -41,14 +41,14 @@ The end-to-end model includes the information source, source encoder, channel en
 
 ### Random Processes
 
-- A random process is a collection of random variables indexed by time. Key statistics include the mean $E[\xi(t)]$, variance $D[\xi(t)] = E[(\xi(t)-a(t))^2]$, and correlation functions (auto-, cross-, and covariance).
+- A random process is a collection of random variables indexed by time. Key statistics include the mean $$E[\xi(t)]$$, variance $$D[\xi(t)] = E[(\xi(t)-a(t))^2]$$, and correlation functions (auto-, cross-, and covariance).
 - **Stationary processes:**  
   - *Strict sense:* distribution invariant under time shifts.  
-  - *Wide sense:* constant mean $a$ and autocorrelation $R(\tau)$ depending only on time difference.
-- **Ergodicity:** Time averages equal ensemble averages, e.g., $a=\overline{a}$ and $R(\tau) = \overline{R(\tau)}$.
-- **Wiener–Khinchin theorem:** relates $R(\tau)$ and the power spectral density $P_\xi(f)$ via Fourier transforms.
-- **Linear systems:** Output mean equals $a_iH(0)$; output autocorrelation is $R_{\xi_o}(\tau)=R_{\xi_i}(\tau)*h(t)$; PSD is $P_{\xi_o}(\omega)=|H(\omega)|^2P_{\xi_i}(\omega)$.
-- **Narrowband processes:** Represented as $\xi(t)=a_\xi(t)\cos[\omega_ct+\varphi_\xi(t)]=\xi_c(t)\cos \omega_ct-\xi_s(t)\sin \omega_ct$.
+  - *Wide sense:* constant mean $$a$$ and autocorrelation $$R(\tau)$$ depending only on time difference.
+- **Ergodicity:** Time averages equal ensemble averages, e.g., $$a=\overline{a}$$ and $$R(\tau) = \overline{R(\tau)}$$.
+- **Wiener–Khinchin theorem:** relates $$R(\tau)$$ and the power spectral density $$P_\xi(f)$$ via Fourier transforms.
+- **Linear systems:** Output mean equals $$a_iH(0)$$; output autocorrelation is $$R_{\xi_o}(\tau)=R_{\xi_i}(\tau)*h(t)$$; PSD is $$P_{\xi_o}(\omega)=|H(\omega)|^2P_{\xi_i}(\omega)$$.
+- **Narrowband processes:** Represented as $$\xi(t)=a_\xi(t)\cos[\omega_ct+\varphi_\xi(t)]=\xi_c(t)\cos \omega_ct-\xi_s(t)\sin \omega_ct$$.
 - **Sinusoid plus narrowband Gaussian noise:** Analyze quadrature components, envelope, instantaneous phase, and Rice distribution behavior.
 - **White noise:** Ideal white noise has flat PSD; practical implementations include low-pass and band-pass white noise, plus narrowband Gaussian noise with defined envelopes and phase distributions.
 
@@ -59,7 +59,7 @@ The end-to-end model includes the information source, source encoder, channel en
 - **Classification:** By medium (wireless vs. wired) and by parameter variability (constant vs. random). Constant-parameter channels maintain deterministic characteristics; random-parameter channels fluctuate unpredictably.
 - **Capacity:**  
   - *Discrete:* Shannon capacity accounts for symbol alphabets and transition probabilities.  
-  - *Continuous:* $C=B \log_2(1+S/N)$ bits/s for AWGN under average power constraints.
+  - *Continuous:* $$C=B \log_2(1+S/N)$$ bits/s for AWGN under average power constraints.
 
 ### Analog Modulation Systems
 
@@ -72,10 +72,10 @@ The end-to-end model includes the information source, source encoder, channel en
 
 ### Digital Baseband Transmission
 
-- **Baseband signals:** Includes polar/nonpolar NRZ, RZ, and other pulse shapes, each with specific spectra describable via power spectral density of steady-state ($v(t)$) and alternating components ($u(t)$).
-- **Line coding:** Selection criteria cover DC content, bandwidth, clock recovery, and error performance. Common codes: AMI, $HDB_3$, Manchester (bi-phase), differential bi-phase, CMI, and block codes.
+- **Baseband signals:** Includes polar/nonpolar NRZ, RZ, and other pulse shapes, each with specific spectra describable via power spectral density of steady-state ($$v(t)$$) and alternating components ($$u(t)$$).
+- **Line coding:** Selection criteria cover DC content, bandwidth, clock recovery, and error performance. Common codes: AMI, $$HDB_3$$, Manchester (bi-phase), differential bi-phase, CMI, and block codes.
 - **Transmission system:** Consists of data source, encoder, pulse shaper, channel, equalizer, and receiver. ISI arises when filtered pulses overlap, violating Nyquist criteria.
-- **Quantitative ISI analysis:** Uses pulse response, eye diagrams, and Nyquist’s first criterion to ensure zero ISI. Ideal low-pass and raised-cosine spectra offer practical solutions with roll-off factor $\beta$.
+- **Quantitative ISI analysis:** Uses pulse response, eye diagrams, and Nyquist’s first criterion to ensure zero ISI. Ideal low-pass and raised-cosine spectra offer practical solutions with roll-off factor $$\beta$$.
 - **Noise performance:** Calculates BER for binary bipolar and unipolar signaling under AWGN, highlighting SNR requirements.
 - **Time-domain equalization:** Designs linear/nonlinear equalizers to satisfy zero-forcing or MMSE criteria. Adaptive equalizers minimize peak distortion or mean squared error through training and tracking.
 
@@ -97,7 +97,7 @@ The end-to-end model includes the information source, source encoder, channel en
 
 - **2ASK:** Binary amplitude shift keying; defined waveform, generation via multipliers, coherent/noncoherent detection, PSD, and bandwidth to first null.
 - **2FSK:** Binary frequency shift keying; representation with two tone frequencies, VCO-based generation, coherent and noncoherent demodulation (filters, discriminators), PSD, and bandwidth.
-- **2PSK:** Binary phase shift keying; carriers differ by $\pi$ phase, generated via mixers or balanced modulators, demodulated with coherent detectors, exhibits constant envelope and specific PSD/bandwidth.
+- **2PSK:** Binary phase shift keying; carriers differ by $$\pi$$ phase, generated via mixers or balanced modulators, demodulated with coherent detectors, exhibits constant envelope and specific PSD/bandwidth.
 - **2DPSK:** Differential PSK encodes information in phase transitions, enabling detection without explicit carrier phase recovery.
 - **Noise performance:** Compares BER among 2ASK, 2FSK, 2PSK, and 2DPSK under identical SNRs, often summarized in performance charts.
 
@@ -105,5 +105,5 @@ The end-to-end model includes the information source, source encoder, channel en
 
 - Channels can be random, bursty, or mixed, so error control leverages detection/retransmission (ARQ), forward error correction (FEC), or hybrid schemes.
 - **Stop-and-wait** and **pull-back** ARQ illustrate basic ARQ strategies.
-- **Forward-error-correcting codes:** Block codes with parameters $(n,k)$ add $r=n-k$ parity bits. Hamming distance dictates capabilities: detecting $e$ errors requires $d_0 \ge e+1$; correcting $t$ errors requires $d_0 \ge 2t+1$; correcting $t$ while detecting $e$ requires $d_0 \ge e+t+1$.
+- **Forward-error-correcting codes:** Block codes with parameters $$(n,k)$$ add $$r=n-k$$ parity bits. Hamming distance dictates capabilities: detecting $$e$$ errors requires $$d_0 \ge e+1$$; correcting $$t$$ errors requires $$d_0 \ge 2t+1$$; correcting $$t$$ while detecting $$e$$ requires $$d_0 \ge e+t+1$$.
 - **Simple codes:** Parity bit, two-dimensional parity (for burst errors), constant-weight codes, and complemented codes (parity dependent on number of ones).

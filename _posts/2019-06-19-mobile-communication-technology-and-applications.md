@@ -36,7 +36,7 @@ comments: true
   $$
 
   Mitigation: deploy additional base stations.
-- **Small-scale (fast) fading:** Driven by multipath. Envelopes typically follow Rayleigh or Rician distributions. **Time dispersion** is described by mean excess delay and RMS delay spread; **coherence bandwidth** satisfies $\Delta f=1/(6\pi\sigma_\tau)$ for correlation 0.9 or $\Delta f=1/(2\pi\sigma_\tau)$ for 0.5. Larger delay spreads narrow $\Delta f$ and exacerbate intersymbol interference (ISI). **Coherence time** relates to Doppler spread by $T_c=\sqrt{9/(16\pi f_m^2)}$. Mitigation: diversity reception.
+- **Small-scale (fast) fading:** Driven by multipath. Envelopes typically follow Rayleigh or Rician distributions. **Time dispersion** is described by mean excess delay and RMS delay spread; **coherence bandwidth** satisfies $$\Delta f=1/(6\pi\sigma_\tau)$$ for correlation 0.9 or $$\Delta f=1/(2\pi\sigma_\tau)$$ for 0.5. Larger delay spreads narrow $$\Delta f$$ and exacerbate intersymbol interference (ISI). **Coherence time** relates to Doppler spread by $$T_c=\sqrt{9/(16\pi f_m^2)}$$. Mitigation: diversity reception.
 
 ### 3. Voice Coding, Channel Coding, and Modulation
 
@@ -72,7 +72,7 @@ comments: true
   \phi_2(t)=\sqrt{\frac{2}{T}}\sin(2\pi f_ct)
   $$
 
-  Each signal $s_i(t)$ is represented by coefficient vector $s_i$, and constellation distances follow
+  Each signal $$s_i(t)$$ is represented by coefficient vector $$s_i$$, and constellation distances follow
 
   $$
   \|s_i-s_k\|=\sqrt{\sum_{j=1}^N(s_{ij}-s_{kj})^2}=\sqrt{\int_0^T (s_i(t)-s_k(t))^2 dt}.
@@ -88,7 +88,7 @@ comments: true
 
 #### 4.1 Spread Spectrum
 - **Features:** Uses bandwidth far exceeding the original signal via high-rate pseudo-random codes. Provides resilience to intentional and narrowband interference and mitigates multipath.
-- **Shannon rationale:** For $S/N \ll 1$, $C/B \approx 1.44 S/N$, so increasing bandwidth allows reliable communication at low SNR. After despreading, desired signals collapse back into a narrow band while interference remains dispersed.
+- **Shannon rationale:** For $$S/N \ll 1$$, $$C/B \approx 1.44 S/N$$, so increasing bandwidth allows reliable communication at low SNR. After despreading, desired signals collapse back into a narrow band while interference remains dispersed.
 - **DSSS:** Multiply the data stream by a pseudo-random code, modulate, transmit, then despread using a synchronized local code before demodulation.
 - **FHSS:** Drive the RF oscillator with a PN sequence so the carrier hops rapidly; effectively a sequence of narrowband transmissions over a wide spectrum.
 - **Codes:** Ideal codes provide many sequences, sharp autocorrelation, zero cross-correlation, and high complexity. Walsh codes are orthogonal yet unsuitable as spread-spectrum codes because different codewords occupy unequal bandwidths. PN codes (m-sequences, Gold sequences) approximate noise and work well.
@@ -119,15 +119,15 @@ comments: true
 
 #### 5.1 Cellular Architecture
 - **Cell types:** Belt-shaped service areas (two- or three-frequency) and planar honeycomb layouts. Advantages include higher frequency reuse, flexible deployment, and complex topology.
-- **Clusters:** $N_R$ cells sharing the full band form a cluster (size $N_R$). Cells inside a cluster use distinct frequencies; reuse occurs only between different clusters. Adjacent clusters must maintain equal co-channel spacing.
-- **Reuse factor:** $Q=D/R=\sqrt{3N_R}$, where $D$ is co-channel distance and $R$ cell radius. Larger $Q$ reduces interference but lowers capacity.
+- **Clusters:** $$N_R$$ cells sharing the full band form a cluster (size $$N_R$$). Cells inside a cluster use distinct frequencies; reuse occurs only between different clusters. Adjacent clusters must maintain equal co-channel spacing.
+- **Reuse factor:** $$Q=D/R=\sqrt{3N_R}$$, where $$D$$ is co-channel distance and $$R$$ cell radius. Larger $$Q$$ reduces interference but lowers capacity.
 - **Carrier-to-interference ratio:**
 
   $$
   \frac{S}{I}=\frac{R^{-n}}{\sum_{i=1}^{i_0}D_i^{-n}}
   $$
 
-  Assuming equal-distance first-tier interferers, $S/I = (\sqrt{3N})^n/i_0$.
+  Assuming equal-distance first-tier interferers, $$S/I = (\sqrt{3N})^n/i_0$$.
 - **Excitation:** Center-fed or vertex-fed cells.
 - **Cell splitting:** Decrease cell radius or increase per-cell channels to boost capacity in dense areas.
 
@@ -138,7 +138,7 @@ comments: true
 - **TDMA:** Partitions channels by time slots (see frame diagram). Offers high burst rates, removes duplexer needs, simplifies handover, but requires adaptive equalization at high rates.
 - **CDMA:** Assigns quasi-orthogonal PN codes per user. Handles multiple users on the same spectrum, offers soft capacity, mitigates multipath, supports smooth soft handover and macro diversity, but must address multiple-access interference and near-far effects.
 - **SDMA:** Uses adaptive antenna arrays to form beams toward different users, boosting capacity, coverage, compatibility, and localization while lowering interference and power, but must be combined with other MA schemes.
-- **System capacity:** $m = \frac{B_t}{B_c N} = \frac{B_t}{B_c\sqrt{\frac{2}{3}\left(\frac{C}{I}\right)_{min}}}$.
+- **System capacity:** $$m = \frac{B_t}{B_c N} = \frac{B_t}{B_c\sqrt{\frac{2}{3}\left(\frac{C}{I}\right)_{min}}}$$.
 
 ### 6. GSM
 
@@ -156,7 +156,7 @@ comments: true
 #### 6.2 Channels
 - **Time-slot/frame hierarchy:** Slots (0.577 ms) form TDMA frames (8 slots, 4.615 ms), which compose 26-frame traffic multi-frames or 51-frame control multi-frames; superframes contain 51 traffic or 26 control multi-frames (1326 frames, 6.12 s); hyperframes contain 2048 superframes (3 h 28 min 53.760 s).
 - **Logical channels:** Traffic channels (full/half-rate voice or data) plus control channels (BCH, CCCH, DCCH).
-- **Mapping:** Each RF carrier offers eight physical channels but more logical channels, so multiplexing is required. Example: carrier $C_0$ uses TS0–TS1 for control, TS2–TS7 for traffic; other carriers devote all slots to traffic.
+- **Mapping:** Each RF carrier offers eight physical channels but more logical channels, so multiplexing is required. Example: carrier $$C_0$$ uses TS0–TS1 for control, TS2–TS7 for traffic; other carriers devote all slots to traffic.
 - **Burst types:** Normal, frequency-correction, synchronization, access, and idle bursts.
 
 #### 6.3 Radio Transmission Technologies
@@ -214,7 +214,7 @@ comments: true
 
 #### 8.3 CDMA2000
 - **Network:** Similar layered structure (see diagram).
-- **Air interface:** CDMA2000-compatible with IS-95; bandwidth $N\times1.25$ MHz with chip rate $N\times1.2288$ Mcps (N = 1,3,6,9,12), 8k/13k QCELP or 8k EVRC voice, GPS/GLONASS synchronization, dual-loop power control, downlink OTD/STS transmit diversity, pilot-aided coherent demodulation, convolutional/Turbo coding, BPSK uplink and QPSK downlink.
+- **Air interface:** CDMA2000-compatible with IS-95; bandwidth $$N\times1.25$$ MHz with chip rate $$N\times1.2288$$ Mcps (N = 1,3,6,9,12), 8k/13k QCELP or 8k EVRC voice, GPS/GLONASS synchronization, dual-loop power control, downlink OTD/STS transmit diversity, pilot-aided coherent demodulation, convolutional/Turbo coding, BPSK uplink and QPSK downlink.
 
 #### 8.4 TD-SCDMA
 - **Network:** See architecture figure.

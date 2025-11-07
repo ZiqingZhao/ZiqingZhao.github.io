@@ -44,11 +44,11 @@ ORB inherits the FAST detector but augments it with an orientation estimate, pro
 
 #### 2.1.1 FAST Keypoint Detection
 
-FAST tests the intensity differences between a candidate pixel $p$ and the pixels on a circle of radius 3. If a contiguous set of pixels exceeds a brightness threshold relative to $p$ (typically at least three of the samples at $90^{\circ}$ increments and at least three quarters of the full 16 samples), $p$ is declared a corner:
+FAST tests the intensity differences between a candidate pixel $$p$$ and the pixels on a circle of radius 3. If a contiguous set of pixels exceeds a brightness threshold relative to $$p$$ (typically at least three of the samples at $$90^{\circ}$$ increments and at least three quarters of the full 16 samples), $$p$$ is declared a corner:
 $$
 N = \sum_x |I(x) - I(p)| > \varepsilon_d.
 $$
-Early rejection—checking the four pixels at $0^{\circ}$, $90^{\circ}$, $180^{\circ}$, $270^{\circ}$ first—further speeds up the test.
+Early rejection—checking the four pixels at $$0^{\circ}$$, $$90^{\circ}$$, $$180^{\circ}$$, $$270^{\circ}$$ first—further speeds up the test.
 
 #### 2.1.2 Intensity-Centroid Orientation
 
@@ -60,7 +60,7 @@ the intensity centroid is
 $$
 C = \left(\frac{m_{10}}{m_{00}}, \frac{m_{01}}{m_{00}}\right),
 $$
-and the orientation of keypoint $p$ is obtained from the vector pointing from $p$ to $C$:
+and the orientation of keypoint $$p$$ is obtained from the vector pointing from $$p$$ to $$C$$:
 $$
 \theta = \tan^{-1}(m_{01}, m_{10}).
 $$
@@ -72,7 +72,7 @@ ORB uses BRIEF descriptors but adapts them for rotation and improved robustness.
 
 #### 2.2.1 BRIEF Descriptor Construction
 
-BRIEF randomly samples $n$ point pairs $\{(x_i, y_i)\}$ inside a patch centered at keypoint $p$ (typically a $31 \times 31$ window). For each pair, it compares intensities and forms a binary test:
+BRIEF randomly samples $$n$$ point pairs $$\{(x_i, y_i)\}$$ inside a patch centered at keypoint $$p$$ (typically a $$31 \times 31$$ window). For each pair, it compares intensities and forms a binary test:
 $$
 \tau(p; x, y) =
 \begin{cases}
@@ -84,11 +84,11 @@ The descriptor is the concatenation of these bits,
 $$
 f_n(p) = \sum_{i=1}^{n} 2^{i-1} \tau(p; x_i, y_i),
 $$
-producing a compact string such as `1011` for $n=4$. BRIEF is fast but not rotation invariant and is sensitive to noise, so Gaussian smoothing is often applied first.
+producing a compact string such as `1011` for $$n=4$$. BRIEF is fast but not rotation invariant and is sensitive to noise, so Gaussian smoothing is often applied first.
 
 #### 2.2.2 Steered BRIEF
 
-By stacking the point pairs into a $2 \times n$ matrix
+By stacking the point pairs into a $$2 \times n$$ matrix
 $$
 S =
 \begin{pmatrix}
@@ -96,7 +96,7 @@ x_1 & \ldots & x_n \\
 y_1 & \ldots & y_n
 \end{pmatrix},
 $$
-and rotating it with $R_\theta$, the sampling pattern can be aligned with the keypoint orientation, producing a rotation-steered descriptor
+and rotating it with $$R_\theta$$, the sampling pattern can be aligned with the keypoint orientation, producing a rotation-steered descriptor
 $$
 S_\theta = R_\theta S, \qquad g_n(p, \theta) = f_n(p) \mid (x_i, y_i) \in S_\theta.
 $$
@@ -107,11 +107,11 @@ However, steering alone reduces descriptor variance and thus discriminability.
 rBRIEF restores high variance and low correlation by learning the sampling pattern:
 
 1. Build a dataset of 300k keypoints.  
-2. Enumerate all possible binary tests formed by pairs of $5 \times 5$ subwindows inside the $31 \times 31$ patch ($M = 205{,}590$ candidates after removing duplicates).  
+2. Enumerate all possible binary tests formed by pairs of $$5 \times 5$$ subwindows inside the $$31 \times 31$$ patch ($$M = 205{,}590$$ candidates after removing duplicates).  
 3. For each test, evaluate its mean (distance from 0.5) and rank them.  
-4. Perform a greedy selection: add the best test to the result set $R$, remove it from the candidate list $T$, and keep adding tests whose correlation with already-selected tests stays below a threshold. Increase the threshold if fewer than 256 tests survive.
+4. Perform a greedy selection: add the best test to the result set $$R$$, remove it from the candidate list $$T$$, and keep adding tests whose correlation with already-selected tests stays below a threshold. Increase the threshold if fewer than 256 tests survive.
 
-The resulting 256-bit descriptor maintains high variance around 0.5 and low inter-bit correlation, outperforming steered BRIEF. Using $5 \times 5$ subwindows (average intensities instead of single pixels) also improves noise robustness. Experiments show that rBRIEF remains accurate even as SNR drops, whereas SIFT deteriorates quickly.
+The resulting 256-bit descriptor maintains high variance around 0.5 and low inter-bit correlation, outperforming steered BRIEF. Using $$5 \times 5$$ subwindows (average intensities instead of single pixels) also improves noise robustness. Experiments show that rBRIEF remains accurate even as SNR drops, whereas SIFT deteriorates quickly.
 
 ### 2.3 Summary
 

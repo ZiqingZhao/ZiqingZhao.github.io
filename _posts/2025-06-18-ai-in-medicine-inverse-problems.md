@@ -13,7 +13,7 @@ comments: true
 $$
     y = A x + n
 $$
-- **Goal**: recover $x$ from noisy measurements $y$  
+- **Goal**: recover $$x$$ from noisy measurements $$y$$  
 - **Applications**: inpainting, deblurring, denoising, super-resolution, reconstruction, registration
 
 ### Classical Approach
@@ -32,7 +32,7 @@ $$
 $$
 \arg\min_x \mathcal{D}(Ax,y)+\lambda\mathcal{R}(x)
 $$
-where $\mathcal{D}(Ax,y)$ data consistency term, $\mathcal{R}(x)$ regularisation term (encoding prior knowledge on $x$), $\lambda$ regularisation parameter.
+where $$\mathcal{D}(Ax,y)$$ data consistency term, $$\mathcal{R}(x)$$ regularisation term (encoding prior knowledge on $$x$$), $$\lambda$$ regularisation parameter.
 
 **Common regularisers**
 
@@ -40,16 +40,16 @@ where $\mathcal{D}(Ax,y)$ data consistency term, $\mathcal{R}(x)$ regularisation
 
 ### ML Approach
 ![Regularization Inverse](/img/ai-in-medicine/regularization_inverse.png)
-Instead of choosing $\mathcal{R}$ a-priori based on a simple model of image, learn $\mathcal{R}$ from training data.
+Instead of choosing $$\mathcal{R}$$ a-priori based on a simple model of image, learn $$\mathcal{R}$$ from training data.
 
 ##### Forward & Inverse Models
 ![Forward Inverse Model](/img/ai-in-medicine/forward_inverse_model.png)
-Inverse model $\mathcal{F}_\phi^{-1}$: directly map $y\to x$ via a trained network.
+Inverse model $$\mathcal{F}_\phi^{-1}$$: directly map $$y\to x$$ via a trained network.
 
 #####  Method Taxonomy
 
 **Model-agnostic**
-- Ignore $A$, learn $y\to x$ directly 
+- Ignore $$A$$, learn $$y\to x$$ directly 
 - Example: Up-sampling
 	![Up Sampling](/img/ai-in-medicine/up-sampling.png)
 
@@ -57,7 +57,7 @@ Inverse model $\mathcal{F}_\phi^{-1}$: directly map $y\to x$ via a trained netwo
 - Learn denoiser or prior, then plug into classical solver (plug-and-play)  
 - Example: Deep proximal gradient -> unroll proximal gradient steps, replace proximal operator with learned denoiser  
 	![Deep Proximal Gradient](/img/ai-in-medicine/deep-proximal-gradient.png)
-- Example: GANs -> constrain $x$ to lie in generator manifold $\mathcal G(z)$, solve $\min_z\|y - A\mathcal G(z)\|$  
+- Example: GANs -> constrain $$x$$ to lie in generator manifold $$\mathcal G(z)$$, solve $$\min_z\|y - A\mathcal G(z)\|$$  
 	![Gan Inverse](/img/ai-in-medicine/gan-inverse.png)
 
 **Unrolled Optimization**
@@ -105,19 +105,19 @@ pixel-wise (L1/L2, Huber), perceptual (VGG features), total variation, adversari
 
 ### Deep Image Prior
 
-- **Idea**: a randomly initialized network $\Psi(z;w)$ fits a single image by optimizing $w$ on observed pixels  
-- **Applications**: denoising, inpainting (solve $\min_w\|\,(m\odot x) - (m\odot \Psi(z;w))\|^2$) 
+- **Idea**: a randomly initialized network $$\Psi(z;w)$$ fits a single image by optimizing $$w$$ on observed pixels  
+- **Applications**: denoising, inpainting (solve $$\min_w\|\,(m\odot x) - (m\odot \Psi(z;w))\|^2$$) 
 
 ### Image Reconstruction
 
 **CT**
 - high-contrast; high spatial resolution; fast acqiusition; but ionising radiation
-- sinogram $\to$ image via Radon inverse; ill-posed inverse problem under sparse views; 
+- sinogram $$\to$$ image via Radon inverse; ill-posed inverse problem under sparse views; 
 - under-sampled reconstruction to reduce radiation 
 
 **MRI**
 - high-contrast; high spatial resolution; no ionising radiation; but slow acquisition process(problematic for moving objects)
-- recover image from undersampled k-space ($y = F x + n$); aliasing correction needed 
+- recover image from undersampled k-space ($$y = F x + n$$); aliasing correction needed 
 - **Undersampling patterns**: 
 	- low frequency only: blurring; loss of detail
 	- regular cartesian: coherent wrap-around along PE direction
